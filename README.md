@@ -1,2 +1,2 @@
-# gamesketcher
-An advanced game design tool.
+# GameSketcher
+An open source game design tool.
