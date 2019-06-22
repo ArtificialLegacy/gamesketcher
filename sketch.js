@@ -187,7 +187,7 @@ function setup() {
     .position(-200, -200)
     .size(90, 23)
     .changed(() => {
-      if(nodeType.value() == "Script"){
+      if(nodeType.value() == "Script" || nodeType.value() == "Note"){
         typeScript();
       } else {
         nodeTemplate.position(-200, -200);
