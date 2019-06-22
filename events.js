@@ -337,7 +337,7 @@ function mousePressed() {
       
       nodes.push(new Node(nodeNameInput.value(), nodeColorInput.value(), nodeBorderInput.value(), nodeType.value()));
 
-      if(nodeType.value() == "Script" && nodeTemplate.value() !== "None"){
+      if((nodeType.value() == "Script" || nodeType.value() == "Note") && nodeTemplate.value() !== "None"){
         let tem = 0;
         for(i = 0; i < templates.length; i++){
           if(nodes[templates[i]].name == nodeTemplate.value()) tem = templates[i];
