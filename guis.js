@@ -484,7 +484,7 @@ function createNodeMenu() {
   text("Color:", wind.w / 4 + 5, wind.h / 4 + 45);
   text("Border:", wind.w / 4 + 5, wind.h / 4 + 70);
   text("Type:", wind.w / 4 + 155, wind.h / 4 + 20);
-  if(nodeType.value() == "Script") text("Template:", wind.w / 4 + 155, wind.h / 4 + 45);
+  if(nodeType.value() == "Script" || nodeType.value() == "Note") text("Template:", wind.w / 4 + 155, wind.h / 4 + 45);
 
   textAlign(CENTER);
 
