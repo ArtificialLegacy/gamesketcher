@@ -10,7 +10,7 @@ function drawLogo(x, y) {
   textAlign(LEFT);
   fill(0);
   textSize(10);
-  text("© 2019 9 Bit Studios MIT", x + 20, y + 5);
+  text("© 2019 4 Bit Studios MIT", x + 20, y + 5);
 }
 
 let nx;
