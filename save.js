@@ -72,12 +72,6 @@ function saveToJSON(){
   saveJSON(saveData, `${saveName}_gamesketcher.json`);
 }
 
-function saveToDrive(){
-  
-}
-
-
-
 function loadFromLocal(){
   deconstructSave(JSON.parse(localStorage.getItem("gamesketcher")));
 }
@@ -99,8 +93,4 @@ function loadFromJSON(){
       alert("Error reading file");
     }
   }
-}
-
-function loadFromDrive(){
-  
 }
