@@ -86,6 +86,8 @@ function loadFromJSON(){
   menuOpen = "main";
   importFromJSON.position(-200, -200);
   
+  scriptIn.position(-200, -200).value("");
+  
   var file = importFromJSON.elt.files[0];
   if (file) {
     var reader = new FileReader();
