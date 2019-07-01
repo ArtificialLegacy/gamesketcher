@@ -8,13 +8,25 @@ function drawLogo(x, y) {
   textAlign(CENTER);
   text("GS", x, y + 5);
   textAlign(LEFT);
-  fill(0);
+  fill(THEMES[theme].MainText);
   textSize(10);
   text("© 2019 4 Bit Studios MIT", x + 20, y + 5);
 }
 
 let nx;
 let ny = 110;
+
+const MENUS = {
+  Node: "node",
+  EditNode: "editNode",
+  EditLink: "editLink",
+  AddTask: "addTask",
+  EditTask: "editTask",
+  File: "file",
+  Export: "export",
+  Import: "import",
+  Main: "main",
+};
 
 function drawEditors() {
   nodeCanvas.remove();
@@ -48,7 +60,7 @@ function drawEditors() {
   textSize(8);
 
   if (editorsOpen == 1) {
-    fill(130);
+    fill(THEMES[theme].Editors.Background);
     stroke(0);
     strokeWeight(3);
     if(nodeEditorOpen){
@@ -77,7 +89,7 @@ function drawEditors() {
       editLink.draw();
       
       push();
-      fill(0);
+      fill(THEMES[theme].Button.Text);
       noStroke();
       textAlign(CENTER);
       textSize(25);
@@ -117,7 +129,7 @@ function drawEditors() {
       tMisc.draw();
       
       push();
-      fill(0);
+      fill(THEMES[theme].Button.Text);
       noStroke();
       textAlign(CENTER);
       textSize(25);
@@ -132,7 +144,7 @@ function drawEditors() {
     }
 
     noStroke();
-    fill(0);
+    fill(THEMES[theme].Editors.Text);
 
     if (scriptEditorOpen) {
       text("[SCRIPT]", 17, 91);
@@ -142,14 +154,14 @@ function drawEditors() {
       nodeCanvas.textAlign(LEFT);
       nodeCanvas.textSize(8);
       nodeCanvas.noStroke();
-      nodeCanvas.fill(0);
+      nodeCanvas.fill(THEMES[theme].Editors.Text);
       nodeCanvas.text("[NODES]", 7, 16);
     } else if (taskEditorOpen) {
       text("[TASKS]", 17, ny + 16);
     }
   } else if (editorsOpen == 2) {
     
-    fill(130);
+    fill(THEMES[theme].Editors.Background);
     stroke(0);
     strokeWeight(3);
     
@@ -180,7 +192,7 @@ function drawEditors() {
         editLink.draw();
         
         push();
-        fill(0);
+        fill(THEMES[theme].Button.Text);
         noStroke();
         textAlign(CENTER);
         textSize(25);
@@ -216,7 +228,7 @@ function drawEditors() {
         editLink.draw();
         
         push();
-        fill(0);
+        fill(THEMES[theme].Button.Text);
         noStroke();
         textAlign(CENTER);
         textSize(25);
@@ -257,7 +269,7 @@ function drawEditors() {
       tMisc.draw();
         
       push();
-      fill(0);
+      fill(THEMES[theme].Button.Text);
       noStroke();
       textAlign(CENTER);
       textSize(25);
@@ -274,7 +286,7 @@ function drawEditors() {
     }
 
     noStroke();
-    fill(0);
+    fill(THEMES[theme].Editors.Text);
     
     if(nodeEditorOpen){
       nodeCanvas = createGraphics(wind.w / 2 - 10, wind.h - (ny + 10));
@@ -292,7 +304,7 @@ function drawEditors() {
         nodeCanvas.textAlign(LEFT);
         nodeCanvas.textSize(8);
         nodeCanvas.noStroke();
-        nodeCanvas.fill(0);
+        nodeCanvas.fill(THEMES[theme].Editors.Text);
         nodeCanvas.text("[NODES]", 7, 16);
 
       }
@@ -303,7 +315,7 @@ function drawEditors() {
       nodeCanvas.textAlign(LEFT);
       nodeCanvas.textSize(8);
       nodeCanvas.noStroke();
-      nodeCanvas.fill(0);
+      nodeCanvas.fill(THEMES[theme].Editors.Text);
       nodeCanvas.text("[NODES]", 7, 16);
       text("[TASKS]", wind.w / 2 + 6, ny + 16);
     }
@@ -311,7 +323,7 @@ function drawEditors() {
     tx = wind.w / 3 * 2;
     tw = wind.w / 3 - 10;
     
-    fill(130);
+    fill(THEMES[theme].Editors.Background);
     stroke(0);
     strokeWeight(3);
     rect(10, 75, wind.w / 3 - 10, wind.h - 85, 7);
@@ -342,7 +354,7 @@ function drawEditors() {
     editLink.draw();
     
     push();
-    fill(0);
+    fill(THEMES[theme].Button.Text);
     noStroke();
     textAlign(CENTER);
     textSize(25);
@@ -375,7 +387,7 @@ function drawEditors() {
     tMisc.draw();
     
     push();
-    fill(0);
+    fill(THEMES[theme].Button.Text);
     noStroke();
     textAlign(CENTER);
     textSize(25);
@@ -387,7 +399,7 @@ function drawEditors() {
     pop();
 
     noStroke();
-    fill(0);
+    fill(THEMES[theme].Editors.Text);
     
     nodeCanvas = createGraphics(wind.w / 3, wind.h - (ny + 10));
     nx = wind.w / 3;
@@ -396,7 +408,7 @@ function drawEditors() {
     nodeCanvas.textAlign(LEFT);
     nodeCanvas.textSize(8);
     nodeCanvas.noStroke();
-    nodeCanvas.fill(0);
+    nodeCanvas.fill(THEMES[theme].Editors.Text);
     nodeCanvas.text("[NODES]", 7, 16);
     text("[TASKS]", wind.w / 3 * 2 + 6, ny + 17);
   } else {
@@ -412,7 +424,7 @@ function drawEditors() {
     }
 
     noStroke();
-    fill(0);
+    fill(THEMES[theme].Editors.Text);
 
     text("[EMPTY]", 17, 91);
   }
@@ -450,7 +462,7 @@ function drawGrid(){
   let x = cam.x % g;
   let y = cam.y % g;
   
-  nodeCanvas.stroke(0);
+  nodeCanvas.stroke(THEMES[theme].Editor.Grid);
   nodeCanvas.strokeWeight(1);
   nodeCanvas.fill(0);
   for(w = 0; w < nodeCanvas.width / g + 1; w++){
@@ -469,13 +481,13 @@ function createNodeMenu() {
   fill(60, 160);
   rect(0, 0, wind.w, wind.h);
 
-  fill(130);
+  fill(THEMES[theme].UI.Background);
   rect(wind.w / 4, wind.h / 4, wind.w / 2, wind.h / 2);
 
   exitNodeMenuButton.draw();
   createNodeButton.draw();
 
-  fill(0);
+  fill(THEMES[theme].UI.Text);
   noStroke();
   textSize(15);
   textAlign(LEFT);
@@ -487,12 +499,13 @@ function createNodeMenu() {
   if(nodeType.value() == "Script" || nodeType.value() == "Note") text("Template:", wind.w / 4 + 155, wind.h / 4 + 45);
 
   textAlign(CENTER);
+  fill(THEMES[theme].Button.Text);
 
   text("Cancel", wind.w / 4 * 3 - 37, wind.h / 4 * 3 - 12);
   text("Create", wind.w / 4 * 3 - 107, wind.h / 4 * 3 - 12);
   
   if(templateError){
-    fill(237, 136, 109);
+    fill(THEMES[theme].UI.Error);
     textSize(10);
     textAlign(LEFT);
     text("Templates must have unique names.", wind.w / 4 + 5, wind.h / 4 + wind.h / 2 - 5);
@@ -517,14 +530,14 @@ function editNodeMenu(){
   fill(60, 160);
   rect(0, 0, wind.w, wind.h);
 
-  fill(130);
+  fill(THEMES[theme].UI.Background);
   rect(wind.w / 4, wind.h / 4, wind.w / 2, wind.h / 2);
 
   exitEditNodeButton.draw();
   deleteNodeButton.draw();
   editNodeButton.draw();
 
-  fill(0);
+  fill(THEMES[theme].UI.Text);
   noStroke();
   textSize(15);
   textAlign(LEFT);
@@ -534,6 +547,7 @@ function editNodeMenu(){
   text("Border:", wind.w / 4 + 5, wind.h / 4 + 70);
 
   textAlign(CENTER);
+  fill(THEMES[theme].Button.Text);
 
   text("Cancel", wind.w / 4 * 3 - 37, wind.h / 4 * 3 - 12);
   text("Delete", wind.w / 4 * 3 - 107, wind.h / 4 * 3 - 12);
@@ -546,14 +560,14 @@ function editLinkMenu(){
   fill(60, 160);
   rect(0, 0, wind.w, wind.h);
 
-  fill(130);
+  fill(THEMES[theme].UI.Background);
   rect(wind.w / 4, wind.h / 4, wind.w / 2, wind.h / 2);
 
   exitEditLinkButton.draw();
   deleteLinkButton.draw();
   editLinkButton.draw();
 
-  fill(0);
+  fill(THEMES[theme].UI.Text);
   noStroke();
   textSize(15);
   textAlign(LEFT);
@@ -561,6 +575,7 @@ function editLinkMenu(){
   text("Color:", wind.w / 4 + 5, wind.h / 4 + 20);
 
   textAlign(CENTER);
+  fill(THEMES[theme].Button.Text);
 
   text("Cancel", wind.w / 4 * 3 - 37, wind.h / 4 * 3 - 12);
   text("Delete", wind.w / 4 * 3 - 107, wind.h / 4 * 3 - 12);
@@ -573,13 +588,13 @@ function addTaskMenu(){
   fill(60, 160);
   rect(0, 0, wind.w, wind.h);
 
-  fill(130);
+  fill(THEMES[theme].UI.Background);
   rect(wind.w / 4, wind.h / 4, wind.w / 2, wind.h / 2);
   
   exitTask.draw();
   createTask.draw();
   
-  fill(0);
+  fill(THEMES[theme].UI.Text);
   noStroke();
   textSize(15);
   textAlign(LEFT);
@@ -589,6 +604,7 @@ function addTaskMenu(){
   text("Details:", wind.w / 4 + 5, wind.h / 4 + 70);
 
   textAlign(CENTER);
+  fill(THEMES[theme].Button.Text);
 
   text("Cancel", wind.w / 4 * 3 - 37, wind.h / 4 * 3 - 12);
   text("Create", wind.w / 4 * 3 - 107, wind.h / 4 * 3 - 12);
@@ -600,14 +616,14 @@ function editTaskMenu(){
   fill(60, 160);
   rect(0, 0, wind.w, wind.h);
 
-  fill(130);
+  fill(THEMES[theme].UI.Background);
   rect(wind.w / 4, wind.h / 4, wind.w / 2, wind.h / 2);
   
   cancelTask.draw();
   editTask.draw();
   deleteTask.draw();
   
-  fill(0);
+  fill(THEMES[theme].UI.Text);
   noStroke();
   textSize(15);
   textAlign(LEFT);
@@ -617,6 +633,7 @@ function editTaskMenu(){
   text("Details:", wind.w / 4 + 5, wind.h / 4 + 70);
 
   textAlign(CENTER);
+  fill(THEMES[theme].Button.Text);
 
   text("Cancel", wind.w / 4 * 3 - 37, wind.h / 4 * 3 - 12);
   text("Delete", wind.w / 4 * 3 - 107, wind.h / 4 * 3 - 12);
@@ -629,7 +646,7 @@ function fileMenu(){
   fill(60, 160);
   rect(0, 0, wind.w, wind.h);
 
-  fill(130);
+  fill(THEMES[theme].UI.Background);
   rect(wind.w / 4, wind.h / 4, wind.w / 2, wind.h / 2);
 
   saveChange.draw();
@@ -638,14 +655,16 @@ function fileMenu(){
   importProject.draw();
   newProject.draw();
 
-  fill(0);
+  fill(THEMES[theme].UI.Text);
   noStroke();
   textSize(15);
   textAlign(LEFT);
 
   text("Project Name:", wind.w / 4 + 5, wind.h / 4 + 20);
+  text("Theme:", wind.w / 4 + 5, wind.h / 4 + 45);
 
   textAlign(CENTER);
+  fill(THEMES[theme].Button.Text);
 
   text("Cancel", wind.w / 4 * 3 - 37, wind.h / 4 * 3 - 12);
   text("Save", wind.w / 4 * 3 - 107, wind.h / 4 * 3 - 12);
@@ -672,6 +691,7 @@ function exportMenu(){
   textSize(15);
 
   textAlign(CENTER);
+  fill(THEMES[theme].Button.Text);
 
   text("Exit", wind.w / 4 * 3 - 37, wind.h / 4 * 3 - 12);
   text("Browser", wind.w / 4 + 37, wind.h / 4 + 23);
@@ -690,7 +710,7 @@ function importMenu(){
   exitIm.draw();
   importFromLocal.draw();
 
-  fill(0);
+  fill(THEMES[theme].UI.Text);
   noStroke();
   textSize(15);
   textAlign(LEFT);
@@ -698,6 +718,7 @@ function importMenu(){
   text("JSON:", wind.w / 4 + 5, wind.h / 4 + 50);
 
   textAlign(CENTER);
+  fill(THEMES[theme].Button.Text);
 
   text("Exit", wind.w / 4 * 3 - 37, wind.h / 4 * 3 - 12);
   text("Browser", wind.w / 4 + 37, wind.h / 4 + 23);
