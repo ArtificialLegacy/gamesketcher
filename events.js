@@ -602,7 +602,7 @@ function mousePressed() {
       loadFromLocal();
       
       menuOpen = MENUS.Main;
-      scriptIn.show();
+      scriptIn.position(-200, -200).value("");
       importFromJSON.position(-200, -200);
     }
   } else if(menuOpen == MENUS.Export){
