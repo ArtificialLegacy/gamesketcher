@@ -564,7 +564,7 @@ function mousePressed() {
     
     if(newProject.check()){
       menuOpen = MENUS.Main;
-      scriptIn.show();
+      scriptIn.position(-200, -200).value("");
       projectNameEdit.position(-200, -200);
       themeEdit.position(-200, -200);
       
