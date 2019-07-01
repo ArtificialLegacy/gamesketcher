@@ -2,7 +2,7 @@ let oldX = 0;
 let oldY = 0;
 
 function mouseDragged() {
-  if (mouseButton == RIGHT && menuOpen == "main") {
+  if (mouseButton == RIGHT && menuOpen == MENUS.Main) {
     if(nodeEditorOpen){
       for(i = 0; i < nodes.length; i++){
         if(nodes[i].checked){
@@ -43,7 +43,7 @@ function mouseDragged() {
         cam.y += dify;
       }
     }
-  } else if(mouseButton == LEFT && menuOpen == "main" && userTool == "select") {
+  } else if(mouseButton == LEFT && menuOpen == MENUS.Main && userTool == "select") {
     for(i = nodes.length - 1; i >= 0; i--){
       nodes[i].use();
     }
@@ -53,6 +53,12 @@ function mouseDragged() {
 }
 
 function mouseReleased(){
+  if(userTool == "select"){
+    for(i = 0; i < nodes.length; i++){
+      nodes[i].select(i);
+    }
+  }
+  
   for(i = 0; i < nodes.length; i++){
     if(nodes[i].checked){
       nodes[i].checked = false;
@@ -64,7 +70,7 @@ function mouseReleased(){
 function mousePressed() {
   oldX = mouseX;
   oldY = mouseY;
-  if (menuOpen == "main") {
+  if (menuOpen == MENUS.Main) {
     
     if(userTool == "editNode"){
       for(i = 0; i < nodes.length; i++){
@@ -74,18 +80,15 @@ function mousePressed() {
       for(i = 0; i < links.length; i++){
         links[i].edit(i);
       }
-    } else if(userTool == "select"){
-      for(i = 0; i < nodes.length; i++){
-        nodes[i].select(i);
-      }
     }
     
     // Buttons
     
     if(fileButton.check()){
-      menuOpen = "file";
+      menuOpen = MENUS.File;
       scriptIn.hide();
       projectNameEdit.position(wind.w / 4 + 100, wind.h / 4 + 5).value(projectName);
+      themeEdit.position(wind.w / 4 + 100, wind.h / 4 + 30);
     }
     
     if (toggleScriptButton.use()) {
@@ -158,7 +161,7 @@ function mousePressed() {
 
     if (newNodeButton.check() && nodeEditorOpen) {
       templateError = false;
-      menuOpen = "node";
+      menuOpen = MENUS.Node;
       nodeNameInput.position(wind.w / 4 + 55, wind.h / 4 + 5);
       nodeColorInput.position(wind.w / 4 + 55, wind.h / 4 + 30);
       nodeBorderInput.position(wind.w / 4 + 55, wind.h / 4 + 55);
@@ -279,7 +282,7 @@ function mousePressed() {
       }
       if(type !== "none"){
         if(addTask.check()){
-          menuOpen = "addTask";
+          menuOpen = MENUS.AddTask;
           scriptIn.hide();
           taskName.position(wind.w / 4 + 55, wind.h / 4 + 5);
           taskHover.position(wind.w / 4 + 55, wind.h / 4 + 30);
@@ -287,7 +290,7 @@ function mousePressed() {
         } else {
           for(i = 0; i < taskButtons[type].length; i++){
             if(taskButtons[type][i].check()){
-              menuOpen = "editTask";
+              menuOpen = MENUS.EditTask;
               scriptIn.hide();
               
               userTaskType = type;
@@ -307,9 +310,9 @@ function mousePressed() {
         }
       }
     }
-  } else if(menuOpen == "node") {
+  } else if(menuOpen == MENUS.Node) {
     if (exitNodeMenuButton.check()) {
-      menuOpen = "main";
+      menuOpen = MENUS.Main;
       scriptIn.show();
       
       nodeNameInput.position(-200, -20);
@@ -350,7 +353,7 @@ function mousePressed() {
         nodes[nodes.length-1].script = null;
       }
       
-      menuOpen = "main";
+      menuOpen = MENUS.Main;
       scriptIn.show();
       
       nodeNameInput.position(-200, -20);
@@ -359,9 +362,9 @@ function mousePressed() {
       nodeType.position(-200, -200);
       nodeTemplate.position(-200, -200);
     }
-  } else if(menuOpen == "editNode"){
+  } else if(menuOpen == MENUS.EditNode){
     if (exitEditNodeButton.check()) {
-      menuOpen = "main";
+      menuOpen = MENUS.Main;
       userTool = "select";
       editNode.checked = false;
       scriptIn.show();
@@ -383,9 +386,12 @@ function mousePressed() {
         if(links[i]) if(links[i].point1 > userEditingNode) links[i].point1--;
         if(links[i]) if(links[i].point2 > userEditingNode) links[i].point2--;
       }
+      if(nodes[userEditingNode].type == "Template"){
+        
+      }
       nodes.splice(userEditingNode, 1);
       
-      menuOpen = "main";
+      menuOpen = MENUS.Main;
       userTool = "select";
       editNode.checked = false;
       scriptIn.show();
@@ -401,7 +407,7 @@ function mousePressed() {
       nodes[userEditingNode].col = nodeColorEdit.value();
       nodes[userEditingNode].bord = nodeBorderEdit.value();
 
-      menuOpen = "main";
+      menuOpen = MENUS.Main;
       userTool = "select";
       editNode.checked = false;
       scriptIn.show();
@@ -410,9 +416,9 @@ function mousePressed() {
       nodeColorEdit.position(-200, -200);
       nodeBorderEdit.position(-200, -200);
     }
-  } else if(menuOpen == "editLink"){
+  } else if(menuOpen == MENUS.EditLink){
     if (exitEditLinkButton.check()) {
-      menuOpen = "main";
+      menuOpen = MENUS.Main;
       userTool = "select";
       editLink.checked = false;
       scriptIn.show();
@@ -424,7 +430,7 @@ function mousePressed() {
 
       links.splice(userEditingLink, 1);
       
-      menuOpen = "main";
+      menuOpen = MENUS.Main;
       userTool = "select";
       editLink.checked = false;
       scriptIn.show();
@@ -436,16 +442,16 @@ function mousePressed() {
       
       links[userEditingLink].col = linkColorEdit.value();
 
-      menuOpen = "main";
+      menuOpen = MENUS.Main;
       userTool = "select";
       editLink.checked = false;
       scriptIn.show();
       
       linkColorEdit.position(-200, -200);
     }
-  } else if (menuOpen == "addTask"){
+  } else if (menuOpen == MENUS.AddTask){
     if(exitTask.check()){
-      menuOpen = "main";
+      menuOpen = MENUS.Main;
       scriptIn.show();
       
       taskName.position(-200, -200);
@@ -454,7 +460,7 @@ function mousePressed() {
     }
     
     if(createTask.check()){
-      menuOpen = "main";
+      menuOpen = MENUS.Main;
       scriptIn.show();
       
       let type = "";
@@ -486,7 +492,7 @@ function mousePressed() {
       taskScript.position(-200, -200).value("");
       taskHover.position(-200, -200).value("");
     }
-  } else if(menuOpen == "editTask"){
+  } else if(menuOpen == MENUS.EditTask){
     if(editTask.check()){
       tasks[userTaskType][userTask].name = taskEditName.value();
       tasks[userTaskType][userTask].hover = taskHover.value();
@@ -494,7 +500,7 @@ function mousePressed() {
       
       taskbuttons[type][userTask].toolbar = taskHover.value();
       
-      menuOpen = "main";
+      menuOpen = MENUS.Main;
       scriptIn.show();
       
       taskEditName.position(-200, -200);
@@ -503,7 +509,7 @@ function mousePressed() {
     }
     
     if(cancelTask.check()){
-      menuOpen = "main";
+      menuOpen = MENUS.Main;
       scriptIn.show();
       
       taskEditName.position(-200, -200);
@@ -515,45 +521,52 @@ function mousePressed() {
       tasks[userTaskType].splice(userTask, 1);
       taskButtons[userTaskType].splice(userTask, 1);
       
-      menuOpen = "main";
+      menuOpen = MENUS.Main;
       scriptIn.show();
       
       taskEditName.position(-200, -200);
       taskScript.position(-200, -200).value("");
       taskHover.position(-200, -200).value("");
     }
-  } else if(menuOpen == "file"){
+  } else if(menuOpen == MENUS.File){
     if(saveChange.check()){
       projectName = projectNameEdit.value();
       
       if(projectName.replace(/\s/g,'') == "") projectName = "Untitled Project";
       
-      menuOpen = "main";
+      theme = THEME[themeEdit.value()];
+      
+      menuOpen = MENUS.Main;
       scriptIn.show();
       projectNameEdit.position(-200, -200);
+      themeEdit.position(-200, -200);
     }
     
     if(cancelChange.check()){
-      menuOpen = "main";
+      menuOpen = MENUS.Main;
       scriptIn.show();
       projectNameEdit.position(-200, -200);
+      themeEdit.position(-200, -200);
     }
     
     if(saveProject.check()){
-      menuOpen = "export";
+      menuOpen = MENUS.Export;
       projectNameEdit.position(-200, -200);
+      themeEdit.position(-200, -200);
     }
     
     if(importProject.check()){
-      menuOpen = "import";
+      menuOpen = MENUS.Import;
       projectNameEdit.position(-200, -200);
+      themeEdit.position(-200, -200);
       importFromJSON.position(wind.w / 4 + 55, wind.h / 4 + 35);
     }
     
     if(newProject.check()){
-      menuOpen = "main";
+      menuOpen = MENUS.Main;
       scriptIn.show();
       projectNameEdit.position(-200, -200);
+      themeEdit.position(-200, -200);
       
       projectName = "Untitled Project";
 
@@ -578,9 +591,9 @@ function mousePressed() {
       };
       
     }
-  } else if(menuOpen == "import"){
+  } else if(menuOpen == MENUS.Import){
     if(exitIm.check()){
-      menuOpen = "main";
+      menuOpen = MENUS.Main;
       scriptIn.show();
       importFromJSON.position(-200, -200);
     }
@@ -588,32 +601,32 @@ function mousePressed() {
     if(importFromLocal.check()){
       loadFromLocal();
       
-      menuOpen = "main";
+      menuOpen = MENUS.Main;
       scriptIn.show();
       importFromJSON.position(-200, -200);
     }
-  } else if(menuOpen == "export"){
+  } else if(menuOpen == MENUS.Export){
     if(exitEx.check()){
-      menuOpen = "main";
+      menuOpen = MENUS.Main;
       scriptIn.show();
     }
     
     if(exportToLocal.check()){
       saveToLocal();
       
-      menuOpen = "main";
+      menuOpen = MENUS.Main;
       scriptIn.show();
     }
     
     if(exportToJSON.check()){
       saveToJSON();
       
-      menuOpen = "main";
+      menuOpen = MENUS.Main;
       scriptIn.show();
     }
   }
   
-  if(nodeEditorOpen && menuOpen == "main"){
+  if(nodeEditorOpen && menuOpen == MENUS.Main){
     
     if(userTool == "select"){
       let canLink = false;
