@@ -41,7 +41,7 @@ let scriptEditorOpen = true;
 let nodeEditorOpen = true;
 let taskEditorOpen = true;
 
-let menuOpen = "main";
+let menuOpen = MENUS.Main;
 
 let exitNodeMenuButton;
 let createNodeButton;
@@ -72,6 +72,8 @@ let scriptIn;
 
 let projectNameEdit;
 
+let themeEdit;
+
 let saveChange;
 let cancelChange;
 
@@ -87,6 +89,8 @@ let importFromJSON;
 let userTool = "select";
 
 let projectName = "Untitled Project";
+
+let theme = THEME.Dark;
 
 let nodes = [];
 let links = [];
@@ -252,6 +256,15 @@ function setup() {
     .position(-200, -200)
     .size(90, 15);
   
+  themeEdit = createSelect()
+    .position(-200, -200)
+    .size(90, 23);
+  
+  for(let t in THEME){
+    themeEdit.option(t);
+  }
+  themeEdit.value("Dark");
+  
   importFromJSON = createFileInput(loadFromJSON)
     .position(-200, -200)
     .size(90, 15);
@@ -264,8 +277,8 @@ function draw() {
   push();
 
   // layout
-  background(60);
-  stroke(0);
+  background(THEMES[theme].Background);
+  stroke(THEMES[theme].Border);
   strokeWeight(1);
 
   line(0, 35, wind.w, 35);
@@ -280,7 +293,7 @@ function draw() {
   toggleTaskButton.draw();
 
   // Button text
-  fill(0);
+  fill(THEMES[theme].Button.Text);
   noStroke();
   textAlign(CENTER);
   textSize(15);
@@ -291,28 +304,45 @@ function draw() {
   text("Tasks", 270, 57);
   
   // Project Name
+  fill(THEMES[theme].MainText);
   textAlign(LEFT);
   text(projectName, 310, 57);
 
   // Editors
   drawEditors();
-
-  if (menuOpen == "node") {
-    createNodeMenu();
-  } else if(menuOpen == "editNode"){
-    editNodeMenu();
-  } else if(menuOpen == "editLink"){
-    editLinkMenu();
-  } else if(menuOpen == "addTask"){
-    addTaskMenu();
-  } else if(menuOpen == "editTask"){
-    editTaskMenu();
-  } else if(menuOpen == "file"){
-    fileMenu();
-  } else if(menuOpen == "import"){
-    importMenu();
-  } else if(menuOpen == "export"){
-    exportMenu();
+  
+  switch(menuOpen){
+    case MENUS.Node:
+      createNodeMenu();
+    break;
+    
+    case MENUS.EditNode:
+      editNodeMenu();
+    break;
+    
+    case MENUS.EditLink:
+      editLinkMenu();
+    break;
+    
+    case MENUS.AddTask:
+      addTaskMenu();
+    break;
+    
+    case MENUS.EditTask:
+      editTaskMenu();
+    break;
+    
+    case MENUS.File:
+      fileMenu();
+    break;
+    
+    case MENUS.Import:
+      importMenu();
+    break;
+    
+    case MENUS.Export:
+      exportMenu();
+    break;
   }
 
   pop();
@@ -398,5 +428,6 @@ function refreshMenus(){
     taskScript.position(wind.w / 4 + 55, wind.h / 4 + 55);
   } else if(menuOpen == "file"){
     projectNameEdit.position(wind.w / 4 + 100, wind.h / 4 + 5);
+    themeEdit.position(wind.w / 4 + 100, wind.h / 4 + 30);
   }
 }
