@@ -1,10 +1,28 @@
 let saveName;
 
+class CNode {
+  constructor(x, y, name, col, bord, type, script){
+    this.x = x;
+    this.y = y;
+    this.name = name;
+    this.col = col;
+    this.bord = bord;
+    this.type = type;
+    this.script = script;
+  }
+}
+
 function formatSave(){
+  let cnodes = [];
+  
+  for(let n of nodes){
+    cnodes.push(new CNode(n.x, n.y, n.name, n.col, n.bord, n.type, n.script));
+  }
+  
   saveName = projectName.toLowerCase().replace(/\s/g,'');
   saveData = {
     name: projectName,
-    nodes: nodes,
+    nodes: cnodes,
     links: links,
     tasks: tasks,
   };
