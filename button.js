@@ -14,15 +14,15 @@ class Button {
     push();
     if (!this.visible) return;
     strokeWeight(1);
-    stroke(0);
-    fill(160, 220);
+    stroke(THEMES[theme].Button.Border);
+    fill(THEMES[theme].Button.Background);
     rect(this.x, this.y, this.w, this.h, 8);
     if (this.check()) {
       if (menuOpen == this.m) {
         if (this.toolBar) {
           let w = this.toolBar.length * 5 + 10;
 
-          fill(0, 80);
+          fill(THEMES[theme].Button.Tooltip.Background);
           noStroke();
           
           rect(this.x + this.w / 2 - w / 2, this.y - 30, w, 25, 5);
@@ -33,7 +33,7 @@ class Button {
           vertex(this.x + this.w / 2 + 5, this.y - 5);
           endShape();
 
-          fill(255);
+          fill(THEMES[theme].Button.Tooltip.Text);
           textAlign(CENTER);
           textSize(10);
           text(this.toolBar, this.x + this.w / 2, this.y - 14);
