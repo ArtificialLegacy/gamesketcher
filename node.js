@@ -39,7 +39,7 @@ class Node {
     }
   }
   select(l){
-    if(this.check() && scriptEditorOpen && this.type !== "Label" && this.type !== "Comment"){
+    if(this.check() && scriptEditorOpen && this.type !== "Label" && this.type !== "Comment" && !this.checked){
       if(userOpenNode == l){
         userSelNode = false;
         userOpenNode = null;
