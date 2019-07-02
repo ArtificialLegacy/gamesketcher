@@ -603,6 +603,7 @@ function mousePressed() {
       
       menuOpen = MENUS.Main;
       scriptIn.position(-200, -200).value("");
+      scriptIn.show();
       importFromJSON.position(-200, -200);
     }
   } else if(menuOpen == MENUS.Export){
