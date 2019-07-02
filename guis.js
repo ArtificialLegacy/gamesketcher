@@ -471,6 +471,10 @@ function drawGrid(){
   for(h = 0; h < nodeCanvas.height / g + 1; h++){
     nodeCanvas.line(0, h * g + y, nodeCanvas.width, h * g + y);
   }
+  nodeCanvas.stroke(0);
+  nodeCanvas.strokeWeight(3);
+  nodeCanvas.noFill();
+  nodeCanvas.rect(0, 0, nodeCanvas.width, nodeCanvas.height, 7);
 }
 
 let templateError = false;
