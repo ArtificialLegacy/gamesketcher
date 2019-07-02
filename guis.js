@@ -462,7 +462,7 @@ function drawGrid(){
   let x = cam.x % g;
   let y = cam.y % g;
   
-  nodeCanvas.stroke(THEMES[theme].Editor.Grid);
+  nodeCanvas.stroke(THEMES[theme].Editors.Grid);
   nodeCanvas.strokeWeight(1);
   nodeCanvas.fill(0);
   for(w = 0; w < nodeCanvas.width / g + 1; w++){
