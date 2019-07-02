@@ -81,6 +81,7 @@ function loadFromJSON(){
   importFromJSON.position(-200, -200);
   
   scriptIn.position(-200, -200).value("");
+  scriptIn.show();
   
   var file = importFromJSON.elt.files[0];
   if (file) {
