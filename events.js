@@ -40,8 +40,8 @@ function mouseDragged() {
         let difx = mouseX - oldX;
         let dify = mouseY - oldY;
         
-        difx = min(max(difx, 20), -20);
-        dify = min(max(dify, 20), -20);
+        difx = max(min(difx, 20), -20);
+        dify = max(min(dify, 20), -20);
         
         cam.x += difx;
         cam.y += dify;
